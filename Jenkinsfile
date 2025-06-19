@@ -80,3 +80,5 @@ pipeline {
                 sh "cp $LOGO_SRC src/logo.svg"
             }
         }
+    }
+}
