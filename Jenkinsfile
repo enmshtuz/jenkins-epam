@@ -3,6 +3,9 @@ pipeline {
     environment {
         BRANCH = "${env.BRANCH_NAME}"
     }
+    tools {
+        nodejs '7.8.0'
+    }
 
     stages {
         stage('Checkout') {
