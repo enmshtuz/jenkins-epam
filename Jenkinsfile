@@ -4,7 +4,7 @@ pipeline {
         BRANCH = "${env.BRANCH_NAME}"
         DOCKER_HOST = 'tcp://host.docker.internal:2375'
     }
-    
+
     tools {
         nodejs '7.8.0'
     }
@@ -16,6 +16,7 @@ pipeline {
                 sh 'docker version'
             }
         }
+    }
 
     stages {
         stage('Checkout') {
@@ -40,7 +41,7 @@ pipeline {
                 }
             }
         }
-
+    }
 
         stage('Build') {
             steps {
@@ -85,6 +86,4 @@ pipeline {
                 """
             }
         }
-
-    }
 }
