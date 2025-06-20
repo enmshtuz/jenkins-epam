@@ -1,7 +1,7 @@
 pipeline {
 
     agent any
-    
+
     environment {
         BRANCH = "${env.BRANCH_NAME}"
         DOCKER_HOST = 'tcp://host.docker.internal:2375'
@@ -81,13 +81,17 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Trigger Deployment Pipeline') {
             steps {
-                sh """
-                    docker stop $BRANCH || true
-                    docker rm $BRANCH || true
-                    docker run -d -p $PORT:$PORT --name $BRANCH $IMAGE_NAME
-                """
+                script {
+                    def targetJob = ''
+                    if (env.BRANCH_NAME == 'main') {
+                        targetJob = 'Deploy_to_main'
+                    } else {
+                        targetJob = 'Deploy_to_dev'
+                    }
+                    build job: targetJob, wait: false
+                }
             }
         }
     }
