@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     environment {
         BRANCH = "${env.BRANCH_NAME}"
         DOCKER_HOST = 'tcp://host.docker.internal:2375'
@@ -9,16 +10,13 @@ pipeline {
         nodejs '7.8.0'
     }
 
-
     stages {
         stage('Docker Version') {
             steps {
                 sh 'docker version'
             }
         }
-    }
 
-    stages {
         stage('Checkout') {
             steps {
                 checkout scm
@@ -41,7 +39,6 @@ pipeline {
                 }
             }
         }
-    }
 
         stage('Build') {
             steps {
@@ -86,4 +83,5 @@ pipeline {
                 """
             }
         }
+    }
 }
