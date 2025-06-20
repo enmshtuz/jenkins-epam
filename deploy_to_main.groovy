@@ -21,7 +21,7 @@ pipeline {
                         docker stop dev || true
                         docker rm dev || true
 
-                        docker run -d -p 3000:3000 --name dev $DOCKER_USER/$IMAGE
+                        docker run -d -expose -p 3000:3000 --name dev $DOCKER_USER/$IMAGE
                     """
                 }
             }
