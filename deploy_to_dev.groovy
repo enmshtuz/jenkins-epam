@@ -21,7 +21,7 @@ pipeline {
                         docker stop dev || true
                         docker rm dev || true
 
-                        docker run -d -p 3001:3001 --name dev $DOCKER_USER/$IMAGE
+                        docker run -d -p 3001:3000 --name dev -e HOST=0.0.0.0 $DOCKER_USER/$IMAGE
                     """
                 }
             }
