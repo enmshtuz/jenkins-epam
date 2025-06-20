@@ -14,24 +14,25 @@ pipeline {
             }
         }
 
-        stage('Set Variables') {
+        stage('Set Variables, Change Logo') {
             steps {
                 script {
                     if (env.BRANCH == 'main') {
                         env.PORT = '3000'
                         env.IMAGE_NAME = 'nodemain:v1.0'
                         env.DEPLOY_JOB = 'Deploy_to_main'
-                        env.LOGO_SRC = 'src/logo-main.svg'
+                        logo_src = 'src/logo-main.svg'
                     } else {
                         env.PORT = '3001'
                         env.IMAGE_NAME = 'nodedev:v1.0'
                         env.DEPLOY_JOB = 'Deploy_to_dev'
-                        env.LOGO_SRC = 'src/logo-dev.svg'
+                        logo_src = 'src/logo-dev.svg'
                     }
+
+                    sh "cp ${logo_src} src/logo.svg"
                 }
             }
         }
-
 
 
         stage('Build') {
@@ -78,10 +79,5 @@ pipeline {
             }
         }
 
-        stage('Replace Logo') {
-            steps {
-                sh "cp $LOGO_SRC src/logo.svg"
-            }
-        }
     }
 }
