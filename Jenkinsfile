@@ -2,10 +2,20 @@ pipeline {
     agent any
     environment {
         BRANCH = "${env.BRANCH_NAME}"
+        DOCKER_HOST = 'tcp://host.docker.internal:2375'
     }
+    
     tools {
         nodejs '7.8.0'
     }
+
+
+    stages {
+        stage('Docker Version') {
+            steps {
+                sh 'docker version'
+            }
+        }
 
     stages {
         stage('Checkout') {
@@ -20,15 +30,12 @@ pipeline {
                     if (env.BRANCH == 'main') {
                         env.PORT = '3000'
                         env.IMAGE_NAME = 'nodemain:v1.0'
-                        env.DEPLOY_JOB = 'Deploy_to_main'
                         logo_src = 'src/logo-main.svg'
                     } else {
                         env.PORT = '3001'
                         env.IMAGE_NAME = 'nodedev:v1.0'
-                        env.DEPLOY_JOB = 'Deploy_to_dev'
                         logo_src = 'src/logo-dev.svg'
                     }
-
                     sh "cp ${logo_src} src/logo.svg"
                 }
             }
