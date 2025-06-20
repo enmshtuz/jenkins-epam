@@ -39,7 +39,7 @@ pipeline {
                         docker stop $CONTAINER || true
                         docker rm $CONTAINER || true
 
-                        docker run -d -p $PORT:$PORT --name $CONTAINER $DOCKER_USER/$IMAGE
+                        docker run -d -p $PORT:3000 --name $CONTAINER -e HOST=0.0.0.0 $DOCKER_USER/$IMAGE
                     """
                 }
             }
