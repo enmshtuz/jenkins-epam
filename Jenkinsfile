@@ -1,12 +1,9 @@
 pipeline {
 
-    agent {
-        docker {
-            image 'docker:24.0.7-cli'
-        }
-    }
-
+    agent any
+    
     environment {
+        BRANCH = "${env.BRANCH_NAME}"
         DOCKER_HOST = 'tcp://host.docker.internal:2375'
     }
 
@@ -15,6 +12,12 @@ pipeline {
     }
 
     stages {
+        stage('Debug Docker') {
+            steps {
+                sh 'env && which docker'
+            }
+        }
+
         stage('Docker Version') {
             steps {
                 sh 'docker version'
