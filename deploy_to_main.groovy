@@ -18,8 +18,8 @@ pipeline {
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                         docker pull $DOCKER_USER/$IMAGE
 
-                        docker stop dev || true
-                        docker rm dev || true
+                        docker stop main || true
+                        docker rm main || true
 
                         docker run -d -expose -p 3000:3000 --name main -e HOST=0.0.0.0 $DOCKER_USER/$IMAGE
                     """
