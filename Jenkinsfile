@@ -12,18 +12,6 @@ pipeline {
     }
 
     stages {
-        stage('Debug Docker') {
-            steps {
-                sh 'env && which docker'
-            }
-        }
-
-        stage('Docker Version') {
-            steps {
-                sh 'docker version'
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout scm
