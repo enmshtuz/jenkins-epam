@@ -5,7 +5,16 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'ENVIRONMENT', choices: ['main', 'dev'], description: 'Target environment to deploy to')
+        choice(
+            name: 'ENVIRONMENT', 
+            choices: ['main', 'dev'], 
+            description: 'Target environment to deploy to'
+        )
+        string(
+            name: 'IMAGE_TAG', 
+            defaultValue: 'v1.0', 
+            description: 'Tag of the Docker image to deploy'
+        )    
     }
 
     stages {
@@ -13,11 +22,11 @@ pipeline {
             steps {
                 script {
                     if (params.ENVIRONMENT == 'main') {
-                        env.IMAGE = 'nodemain:v1.0'
+                        env.IMAGE = 'nodemain:${params.IMAGE_TAG}'
                         env.PORT = '3000'
                         env.CONTAINER = 'manual-main'
                     } else {
-                        env.IMAGE = 'nodedev:v1.0'
+                        env.IMAGE = 'nodedev:${params.IMAGE_TAG}'
                         env.PORT = '3001'
                         env.CONTAINER = 'manual-dev'
                     }
